@@ -4,7 +4,7 @@
 >
 > Sourced from [RHEL Documentation](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/configuring_and_managing_networking/configuring-a-network-bridge_configuring-and-managing-networking)
 
-This is a guide for setting up a network bridge on a RHEL 8.3 KVM host and it will largely follow the process described in [RedHat's documentation](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/configuring_and_managing_networking/configuring-a-network-bridge_configuring-and-managing-networking) in the "Configuring and Managing Networking" chapter. I will referencing the documentation heavily as to not re-invent the wheel and provide a consistent approach to setting up the bridge. 
+This is a guide for setting up a network bridge on a RHEL 8.3 KVM host and it will largely follow the process described in [RedHat's documentation](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/configuring_and_managing_networking/configuring-a-network-bridge_configuring-and-managing-networking) in the "Configuring and Managing Networking" chapter. I will be referencing the documentation heavily in this guide to provide a consistent approach to setting up the bridge. 
 
 ## References
 
@@ -171,7 +171,7 @@ The parameter that we want to ensure is set is `--network`. It would look someth
 
 ###### Full Example
 ```
-virt-install --connect qemu:///system --name bender0 --metadata description="qcow:/var/lib/libvirt/images/bender0.qcow2" --vcpus 1 --memory 1024 --disk /var/lib/libvirt/images/bender0.qcow2,driver.iommu=on --disk path=seed.iso,device=cdrom,bus=scsi --network bridge=host-bridge --controller type=virtio-serial --controller type=scsi --boot hd --noautoconsole
+virt-install --connect qemu:///system --name bender0 --vcpus 1 --memory 1024 --disk /var/lib/libvirt/images/bender0.qcow2  --network bridge=host-bridge --boot hd
 ```
 
 #### Existing Guest
