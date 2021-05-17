@@ -18,6 +18,8 @@ These are a collection of references that I used to build this guide. They are a
 
 [4] - [JamieLinux.com - Libvirt Networking Handbook (bridged networking)](https://jamielinux.com/docs/libvirt-networking-handbook/bridged-network.html)
 
+[5] - [RHEL Chapter 13 : Configuring Network Bonding](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/configuring_and_managing_networking/configuring-network-bonding_configuring-and-managing-networking)
+
 ## Configuration
 
 - RHEL 8.3
