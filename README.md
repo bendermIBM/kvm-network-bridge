@@ -25,6 +25,12 @@ These are a collection of references that I used to build this guide. They are a
 - 2x Bonded links, each assigned two OSA cards
 - 1x Bridge, using one of the Bonded links
 
+## Contents
+
+1. [Setup the Linux Bridge](#setup-the-linux-bridge)
+2. [Configure KVM with Linux Bridge](#setup-kvm-with-linux-bridge)
+3. [Modify/Install KVM Guest to utilize Bridge Network](#set-up-kvm-guest-with-kvm-bridge-network)
+
 ## Setup the Linux Bridge
 
 1. Remove IP Configuration from the guests' bond interface if present
