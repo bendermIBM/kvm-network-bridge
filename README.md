@@ -31,13 +31,120 @@ These are a collection of references that I used to build this guide. They are a
 2. [Configure KVM with Linux Bridge](#setup-kvm-with-linux-bridge)
 3. [Modify/Install KVM Guest to utilize Bridge Network](#set-up-kvm-guest-with-kvm-bridge-network)
 
+##### Guide Note
+
+In this guide we will heavily be using the `nmcli` interface. Another option would be to modify the files located in `/etc/sysconfig/network-scripts` directly, and is a matter of personal preference. For consistency, `nmcli` provides us the ability to copy & paste commands which template configuration files, rather than modifying them directly
+
+## Creating "bond" interfaces
+
+You can skip this section if you already have a bond interface created, otherwise follow these steps to get it configured. We will be setting up a bond with an "active-backup" configuration, however you may want to choose a different option. Extended information about the available configurations can be found in [Chapter 13, Section 4 of RedHat's documentation](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/configuring_and_managing_networking/configuring-network-bonding_configuring-and-managing-networking)
+
+1. Create a new bond interface
+
+    ```
+    nmcli connection add type bond con-name bond0 ifname bond0 bond.options "mode=active-backup"
+    ```
+
+    To additionally set a Media Independent Interface (MII) monitoring interval, add the miimon=interval option to the bond.options property. ~ [Chapter 13](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/configuring_and_managing_networking/configuring-network-bonding_configuring-and-managing-networking)
+
+    ```
+    nmcli connection add type bond con-name bond0 ifname bond0 bond.options "mode=active-backup,miimon=1000"
+    ```
+
+2. Create OSA interfaces to the bond connection
+
+    ```
+    nmcli connection add type ethernet slave-type bond con-name bond0-port1 ifname enp7s0 master bond0
+    ```
+
+    ... and the secondary (backup) OSA
+
+    ```
+    nmcli connection add type ethernet slave-type bond con-name bond0-port2 ifname enp8s0 master bond0
+    ```
+
+    Alternatively if you already have linux interfaces defined for the OSA devices you will just have to modify those connections to assign their "master"
+
+    ```
+    nmcli connection modify enp7s0 master bond0
+    nmcli connection modify enp8s0 master bond0
+    ```
+
+3. **Optional** - Assign IP to bond interface
+    
+    If this is the bond interface that you are going to use to back the KVM guest's network, you **do not** need to do this.
+
+    ```
+    nmcli connection modify bond0 ipv4.addresses '192.0.2.1/24'
+    nmcli connection modify bond0 ipv4.gateway '192.0.2.254'
+    nmcli connection modify bond0 ipv4.dns '192.0.2.253'
+    nmcli connection modify bond0 ipv4.dns-search 'example.com'
+    nmcli connection modify bond0 ipv4.method manual
+    ```
+
+    ```
+    nmcli connection modify bond0 ipv6.addresses '2001:db8:1::1/64'
+    nmcli connection modify bond0 ipv6.gateway '2001:db8:1::fffe'
+    nmcli connection modify bond0 ipv6.dns '2001:db8:1::fffd'
+    nmcli connection modify bond0 ipv6.dns-search 'example.com'
+    nmcli connection modify bond0 ipv6.method manual
+    ```
+
+    If you **do not** want an IP configured to the interface, set `ipv4.method == disabled` and `ipv6.method == ignore`
+
+    ```
+    nmcli connection modify bond0 ipv4.method disabled
+    nmcli connection modify bond0 ivp6.method ignore
+    ```
+
+4. Modify a few configuration settings to bring up the "slave" devices automatically with the bond
+
+    ```
+    nmcli connection modify bond0 connection.autoconnect-slaves 1
+    ```
+
+5. Activate Bond Connection
+
+    ```
+    nmcli connection up bond0
+    ```
+
+6. Verify bond is up by running `nmcli connection show`, additionally you can check the bond status by running...
+
+    ```
+    # cat /proc/net/bonding/bond0
+    Ethernet Channel Bonding Driver: v3.7.1 (April 27, 2011)
+
+    Bonding Mode: fault-tolerance (active-backup)
+    Primary Slave: None
+    Currently Active Slave: enp7s0
+    MII Status: up
+    MII Polling Interval (ms): 100
+    Up Delay (ms): 0
+    Down Delay (ms): 0
+
+    Slave Interface: enp7s0
+    MII Status: up
+    Speed: Unknown
+    Duplex: Unknown
+    Link Failure Count: 0
+    Permanent HW addr: 52:54:00:d5:e0:fb
+    Slave queue ID: 0
+
+    Slave Interface: enp8s0
+    MII Status: up
+    Speed: Unknown
+    Duplex: Unknown
+    Link Failure Count: 0
+    Permanent HW addr: 52:54:00:b2:e2:63
+    Slave queue ID: 0
+    ```
+
 ## Setup the Linux Bridge
 
 1. Remove IP Configuration from the guests' bond interface if present
 
 2. Set up a Linux bridge interface on one of the bonded OSA pairs
-
-    We can achieve this by using the `nmcli` interface or by editing sysconfig files. For the sake of this example, we will be using Network Manager's cli (nmcli) to create this bridge connection for us. 
 
     ```
     nmcli connection add type bridge con-name bridge0 ifname bridge0
