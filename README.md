@@ -188,7 +188,7 @@ virt-install --connect qemu:///system --name bender0 --vcpus 1 --memory 1024 --d
 
 1. Shutdown the KVM Guest
 2. Run `virsh edit <guestname>`
-3. Remove existing `interface` definitions (if you are replacing the existing interface)
+3. Remove existing `interface` definitions (if you are replacing the existing interface, otherwise skip)
 4. Add in a new `interface` definition
 
     **NOTE** - you may want to modify `devno` to force an specific internal interface to be created on the KVM guest (instead of eth0, eth1)
