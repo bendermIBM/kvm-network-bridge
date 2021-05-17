@@ -176,12 +176,12 @@ We are now at a point where we can begin to re-configure Linux guests to utilize
 The parameter that we want to ensure is set is `--network`. It would look something like
 
 ```
---network bridge=host-bridge
+--network network=host-bridge
 ```
 
 ###### Full Example
 ```
-virt-install --connect qemu:///system --name bender0 --vcpus 1 --memory 1024 --disk /var/lib/libvirt/images/bender0.qcow2  --network bridge=host-bridge --boot hd
+virt-install --connect qemu:///system --name bender0 --vcpus 1 --memory 1024 --disk /var/lib/libvirt/images/bender0.qcow2  --network network=host-bridge --boot hd
 ```
 
 #### Existing Guest
