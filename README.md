@@ -29,9 +29,10 @@ These are a collection of references that I used to build this guide. They are a
 
 ## Contents
 
-1. [Setup the Linux Bridge](#setup-the-linux-bridge)
-2. [Configure KVM with Linux Bridge](#setup-kvm-with-linux-bridge)
-3. [Modify/Install KVM Guest to utilize Bridge Network](#set-up-kvm-guest-with-kvm-bridge-network)
+1. [Creating "bond" interfaces](#creating-bond-interfaces)
+2. [Setup the Linux Bridge](#setup-the-linux-bridge)
+3. [Configure KVM with Linux Bridge](#setup-kvm-with-linux-bridge)
+4. [Modify/Install KVM Guest to utilize Bridge Network](#set-up-kvm-guest-with-kvm-bridge-network)
 
 ##### Guide Note
 
