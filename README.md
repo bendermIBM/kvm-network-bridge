@@ -42,7 +42,7 @@ These are a collection of references that I used to build this guide. They are a
 
 4. **Optional** - Assign IP to bridge interface
     
-    Given that this bonded OSA pair will be used for the guest network, it's not neccesary to put an IP on the interface, but is an available option.
+    Given that this bonded OSA pair will be used for the guest network, it's not necessary to put an IP on the interface, but is an available option.
 
     ```
     # nmcli connection modify bridge0 ipv4.addresses '192.0.2.1/24'
@@ -62,12 +62,19 @@ These are a collection of references that I used to build this guide. They are a
 
 5. **Optional** - Modify/Disable Spanning Tree Protocol settings
 
-    ```
-    nmcli connection modify bridge0 bridge.priority '16384'
-    ```
+
+    Spanning Tree Protocol alerts the rest of your network of a new bridge being initiated on the network, and can potentially cause issues with automated switch protection protocols protecting against L2 network loops. **Please have a discussion** with your network team in regards to this so that they can either modify your switch port, or recommend that you disable STP for this bridge. 
+
 
     ```
     nmcli connection modify bridge0 bridge.stp no
+    ```
+
+    or possibly.. 
+
+
+    ```
+    nmcli connection modify bridge0 bridge.priority '16384'
     ```
 
 6. Modify a few configuration settings to bring up the "slave" devices automatically with the bridge
