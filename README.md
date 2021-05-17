@@ -2,9 +2,18 @@
 
 > A network bridge is a link-layer device which forwards traffic between networks based on a table of MAC addresses. The bridge builds the MAC addresses table by listening to network traffic and thereby learning what hosts are connected to each network. For example, you can use a software bridge on a Red Hat Enterprise Linux 8 host to emulate a hardware bridge or in virtualization environments, to integrate virtual machines (VM) to the same network as the host. 
 >
-> https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/configuring_and_managing_networking/configuring-a-network-bridge_configuring-and-managing-networking 
+> Sourced from [RHEL Documentation](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/configuring_and_managing_networking/configuring-a-network-bridge_configuring-and-managing-networking)
 
 This is a guide for setting up a network bridge on a RHEL 8.3 KVM host and it will largely follow the process described in [RedHat's documentation](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/configuring_and_managing_networking/configuring-a-network-bridge_configuring-and-managing-networking) in the "Configuring and Managing Networking" chapter. I will referencing the documentation heavily as to not re-invent the wheel and provide a consistent approach to setting up the bridge. 
+
+## References
+
+These are a collection of references that I used to build this guide. They are all very well written and are great sources of information, this guide just serving as an amalgamation of them.
+
+[1] - [RHEL Chapter 11 : Configuring a network bridge](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/configuring_and_managing_networking/configuring-a-network-bridge_configuring-and-managing-networking)
+[2] - [Libvirt Wiki - Networking](https://wiki.libvirt.org/page/Networking)
+[3] - [Linux Config.org - How to use bridged networking with libvirt and KVM ](https://linuxconfig.org/how-to-use-bridged-networking-with-libvirt-and-kvm)
+[4] - [JamieLinux.com - Libvirt Networking Handbook (bridged networking)](https://jamielinux.com/docs/libvirt-networking-handbook/bridged-network.html)
 
 ## Configuration
 
