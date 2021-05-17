@@ -205,4 +205,4 @@ virt-install --connect qemu:///system --name bender0 --vcpus 1 --memory 1024 --d
 
 ## Post-Setup
 
-You should now be able to interact with the KVM guests' internal ethernet interfaces and assign normal network configuration. Network connection is established from guest to guest, host to guest and guest to host at this point. 
+You should now be able to interact with the KVM guests' internal ethernet interfaces and assign normal network configuration. After configuring the network on the guest's internal interfaces, network connection should be established from guest to guest, host to guest and guest to host at this point. 
