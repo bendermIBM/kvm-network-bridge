@@ -11,8 +11,11 @@ This is a guide for setting up a network bridge on a RHEL 8.3 KVM host and it wi
 These are a collection of references that I used to build this guide. They are all very well written and are great sources of information, this guide just serving as an amalgamation of them.
 
 [1] - [RHEL Chapter 11 : Configuring a network bridge](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/configuring_and_managing_networking/configuring-a-network-bridge_configuring-and-managing-networking)
+
 [2] - [Libvirt Wiki - Networking](https://wiki.libvirt.org/page/Networking)
+
 [3] - [Linux Config.org - How to use bridged networking with libvirt and KVM ](https://linuxconfig.org/how-to-use-bridged-networking-with-libvirt-and-kvm)
+
 [4] - [JamieLinux.com - Libvirt Networking Handbook (bridged networking)](https://jamielinux.com/docs/libvirt-networking-handbook/bridged-network.html)
 
 ## Configuration
