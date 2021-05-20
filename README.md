@@ -100,7 +100,7 @@ You can skip this section if you already have a bond interface created, otherwis
     nmcli connection modify bond0 ivp6.method ignore
     ```
 
-4. Modify a few configuration settings to bring up the "slave" devices automatically with the bond
+4. Modify a few configuration settings to bring up the source devices automatically with the bond
 
     ```
     nmcli connection modify bond0 connection.autoconnect-slaves 1
@@ -153,7 +153,7 @@ You can skip this section if you already have a bond interface created, otherwis
     nmcli connection add type bridge con-name bridge0 ifname bridge0
     ```
 
-3. Assign one of the bonds as a "slave" to the bridge interface
+3. Assign one of the bonds as an interface to the bridge interface
 
     ```
     nmcli connection modify <bond interface> master bridge0
@@ -196,7 +196,7 @@ You can skip this section if you already have a bond interface created, otherwis
     nmcli connection modify bridge0 bridge.priority '16384'
     ```
 
-6. Modify a few configuration settings to bring up the "slave" devices automatically with the bridge
+6. Modify a few configuration settings to bring up the source devices automatically with the bridge
 
     ```
     nmcli connection modify bridge0 connection.autoconnect-slaves 1
