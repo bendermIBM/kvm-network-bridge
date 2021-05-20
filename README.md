@@ -100,7 +100,7 @@ You can skip this section if you already have a bond interface created, otherwis
     nmcli connection modify bond0 ivp6.method ignore
     ```
 
-4. Modify a few configuration settings to bring up the "slave" devices automatically with the bond
+4. Modify a few configuration settings to bring up the source devices automatically with the bond
 
     ```
     nmcli connection modify bond0 connection.autoconnect-slaves 1
@@ -153,7 +153,7 @@ You can skip this section if you already have a bond interface created, otherwis
     nmcli connection add type bridge con-name bridge0 ifname bridge0
     ```
 
-3. Assign one of the bonds as a "slave" to the bridge interface
+3. Assign one of the bonds as an interface to the bridge interface
 
     ```
     nmcli connection modify <bond interface> master bridge0
@@ -196,7 +196,7 @@ You can skip this section if you already have a bond interface created, otherwis
     nmcli connection modify bridge0 bridge.priority '16384'
     ```
 
-6. Modify a few configuration settings to bring up the "slave" devices automatically with the bridge
+6. Modify a few configuration settings to bring up the source devices automatically with the bridge
 
     ```
     nmcli connection modify bridge0 connection.autoconnect-slaves 1
@@ -215,22 +215,22 @@ You can skip this section if you already have a bond interface created, otherwis
     First we should see the physical OSA devices present in bridge0's `ip link` definition
 
     ```
-    [root@zt93kd ~]# ip link show master bridge0
-    4: enc180: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq master bridge0 state UP mode DEFAULT group default qlen 1000
-        link/ether aa:95:0b:1c:b8:94 brd ff:ff:ff:ff:ff:ff
+    # ip link show master bridge0
+    39: bond0: <BROADCAST,MULTICAST,MASTER,UP,LOWER_UP> mtu 1500 qdisc noqueue master bridge0 state UP mode DEFAULT group default qlen 1000
+    link/ether 2e:ca:a6:8d:8e:f3 brd ff:ff:ff:ff:ff:ff
     ```
 
     Additionally we can execute `bridge link show` to see some similar information
 
     ```
-    [root@zt93kd ~]# bridge link show
-    4: enc180: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 master bridge0 state forwarding priority 32 cost 100
+    # bridge link show
+    39: bond0: <BROADCAST,MULTICAST,MASTER,UP,LOWER_UP> mtu 1500 master bridge0 state forwarding priority 32 cost 100
     ```
 
     Finally, to verify that everything is plugged in correctly we can execute a tcpdump on the bridge interface, ensuring that we are seeing ARP requests coming from the rest of the infrastructure plugged into the switch. 
 
     ```
-    [root@zt93kd ~]# tcpdump -i bridge0 -e -nnn
+    # tcpdump -i bridge0 -e -nnn
     dropped privs to tcpdump
     tcpdump: verbose output suppressed, use -v or -vv for full protocol decode
     listening on bridge0, link-type EN10MB (Ethernet), capture size 262144 bytes
@@ -262,7 +262,7 @@ Next we need to notify KVM of the new bridge interface that we have setup. The e
     ```
 
     ```
-    [root@zt93kd ~]# virsh net-list
+    # virsh net-list
     Name          State    Autostart   Persistent
     ------------------------------------------------
     host-bridge   inactive no         yes
@@ -277,7 +277,7 @@ Next we need to notify KVM of the new bridge interface that we have setup. The e
 4. Verify that bridge is started and available
 
     ```
-    [root@zt93kd ~]# virsh net-list
+    # virsh net-list
     Name          State    Autostart   Persistent
     ------------------------------------------------
     host-bridge   active   yes         yes
