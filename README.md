@@ -302,6 +302,12 @@ virt-install --connect qemu:///system --name bender0 --vcpus 1 --memory 1024 --d
 
 #### Existing Guest
 
+##### Network Hotplug
+
+1. `virsh attach-interface <guestname> network host-bridge --live`
+2. Observe a new ethernet interface internal to Linux guest.
+
+##### Shutdown & Reboot
 1. Shutdown the KVM Guest
 2. Run `virsh edit <guestname>`
 3. Remove existing `interface` definitions (if you are replacing the existing interface, otherwise skip)
